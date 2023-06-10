@@ -15,7 +15,6 @@ export const performSearch = async ({queryType, query, page}: {queryType: GiphyQ
         if (queryType === GiphyQueryType.SEARCH && query.length > 0) {
             apiUrl = apiUrl + `&q=${query}`;
         }
-        console.log("apiUrl: ", apiUrl);
         const response = await fetch(apiUrl);
         const jsonData = await response.json();
         return mapGifsData(jsonData);
