@@ -8,6 +8,8 @@ const SearchGifs: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const queryType = GiphyQueryType.SEARCH;
   const [searchResults, setSearchResults] = useState<Gif[]>([]);
+  const [page, setPage] = useState<number>(1);
+  const [isPreviousPageEnabled, setIsPreviousPageEnabled] = useState<boolean>(false);
   const [displaySearchResults, setDisplaySearchResults] =
     useState<boolean>(false);
   const [displayTrendingResults, setDisplayTrendingResults] = useState<boolean>(true);
@@ -30,9 +32,27 @@ const SearchGifs: React.FC = () => {
     }
   };
 
-  const overlay = (gifData: Gif) => {
-    console.log("gifData: ", gifData);
-  };
+  const getPrevious = async () => {
+    const query = searchQuery;
+    const searchResult = await performSearch({ queryType, query, page });
+    setSearchResults(searchResult || []);
+    if ( page > 1 ) {
+      setPage(page - 1);
+    }
+    if ( page === 1 ) {
+      setIsPreviousPageEnabled(false);
+    }
+  }
+
+  const getNext = async () => {
+    const query = searchQuery;
+    const searchResult = await performSearch({ queryType, query, page });
+    setSearchResults(searchResult || []);
+    setPage(page + 1);
+    if ( page > 1 ) {
+      setIsPreviousPageEnabled(true);
+    }
+  }  
 
   return (
     <div>
@@ -49,14 +69,15 @@ const SearchGifs: React.FC = () => {
       {displaySearchResults && (
         <div className="searchGifs results">
           <h2>{`Searching for: ${searchQuery}`}</h2>
+          <div className="resultPagination">
+            <span className={isPreviousPageEnabled ? "pageAction" : "pageAction disabled"} onClick={() => {getPrevious()}}>Previous</span>
+            <span className="pageAction" onClick={() => {getNext()}}>Next</span>
+          </div>
           <div className="resultWrapper">
             {searchResults.map((result) => (
               <div
                 className="gif"
                 key={result.id}
-                onClick={() => {
-                  overlay(result);
-                }}
               >
                 <img src={result.url_still} alt={result.slug} />
                 <span className="gifTitle">

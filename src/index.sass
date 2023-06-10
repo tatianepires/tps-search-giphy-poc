@@ -30,6 +30,23 @@ h3
         padding: .5rem
         color: $text-black
 
+.results
+    .resultPagination
+        .pageAction
+            display: inline-block
+            border: 1px solid #c0e8ff
+            border-radius: 4px
+            padding: .5rem
+            &.hover
+                cursor: pointer
+                background-color: #c0e8ff
+            &.disabled
+                border-color: $border-color
+                color: $border-color
+
+        .pageAction+.pageAction
+            margin-left: 1rem
+
 .resultWrapper
     padding: 1rem
 

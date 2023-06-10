@@ -25,6 +25,20 @@ h3 {
   padding: 0.5rem;
   color: #111; }
 
+.results .resultPagination .pageAction {
+  display: inline-block;
+  border: 1px solid #c0e8ff;
+  border-radius: 4px;
+  padding: 0.5rem; }
+  .results .resultPagination .pageAction.hover {
+    cursor: pointer;
+    background-color: #c0e8ff; }
+  .results .resultPagination .pageAction.disabled {
+    border-color: #E5E5E5;
+    color: #E5E5E5; }
+.results .resultPagination .pageAction + .pageAction {
+  margin-left: 1rem; }
+
 .resultWrapper {
   padding: 1rem; }
   .resultWrapper .gif {
